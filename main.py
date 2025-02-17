@@ -31,9 +31,19 @@ params2_articles = {
 
 response= requests.get(BASE_URL, headers=params2_articles).json() #response object decoded into json(via requests method decoded of json)
 
-with open(str("C:\\Users\\samue\\OneDrive\\Bureau\\résumé_articles" + date_name_file + ".txt"), 'w') as f :
-    for i in response['results']:
-        f.write(i.get('publish_date') + i.get('title') + '\n') 
+
+while response['number_of_total_results'] != response['number_of_page_results'] :
+    #print(type(response['number_of_total_results']))
+    last_result_date = response['results'][-1] #dernier date avec timeframe
+    time_new= str(datetime.strptime((re.search(regex_date_USA, str(response['results'][-1]))[0]), "%Y-%m-%d %H:%M:%S") + + timedelta(seconds=1))
+    BASE_URL_new = str("https://www.gamespot.com/api/articles/?api_key="+ API_KEY + "&format=json&filter=publish_date:"+ time_new + "|" + end_date + "&field_list=publish_date,title&lim=1000000")
+    response= requests.get(BASE_URL_new, headers=params2_articles).json() #response object decoded into json(via requests method decoded of json)
+    with open(str("C:\\Users\\samue\\OneDrive\\Bureau\\résumé_articles" + date_name_file + ".txt"), 'a') as f :
+        for i in response['results']:
+            f.write(i.get('publish_date') + i.get('title') + '\n') 
+            print(i.get('publish_date') + i.get('title') + '\n')
+        f.write('\n' + '\n')
+
 
 
 
