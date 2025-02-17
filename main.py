@@ -31,6 +31,12 @@ params2_articles = {
 
 response= requests.get(BASE_URL, headers=params2_articles).json() #response object decoded into json(via requests method decoded of json)
 
+with open(str("C:\\Users\\samue\\OneDrive\\Bureau\\résumé_articles" + date_name_file + ".txt"), 'w') as f :
+    for i in response['results']:
+        f.write(i.get('publish_date') + i.get('title') + '\n') 
+
+
+
 
 
 
