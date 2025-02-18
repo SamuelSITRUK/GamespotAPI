@@ -62,7 +62,8 @@ while response_releases['number_of_total_results'] != response_releases['number_
             print(i.get('release_date') + i.get('name') + '\n')
         f.write('\n' + '\n')
 
-
+#Addinf of functions for the script
+#Adding of error handling in general for the script
 
 
 
